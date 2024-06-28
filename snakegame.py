@@ -29,6 +29,14 @@ snake_block = 10
 # Velocidade da cobrinha
 snake_speed = 15
 
+# Carregar imagens
+apple_img = pygame.image.load('apple.png')
+background_img = pygame.image.load('background.jpg')
+
+# Redimensionar imagens se necessário
+apple_img = pygame.transform.scale(apple_img, (snake_block, snake_block))
+background_img = pygame.transform.scale(background_img, (display_width, display_height))
+
 # Definindo fontes com tamanhos diferentes
 font_style = pygame.font.SysFont(None, 40)
 score_font = pygame.font.SysFont(None, 25)
@@ -46,8 +54,7 @@ def our_snake(snake_block, snake_list):
 
 # Função para desenhar a comida na tela
 def draw_food(foodx, foody):
-    pygame.draw.rect(dis, red, [foodx, foody, snake_block, snake_block])
-    pygame.draw.rect(dis, white, [foodx, foody, snake_block, snake_block], 1)  # Borda branca
+    dis.blit(apple_img, (foodx, foody))
 
 # Função para mostrar uma mensagem na tela
 def message(msg, color, size):
@@ -120,13 +127,8 @@ def gameLoop():
         x1 += x1_change
         y1 += y1_change
 
-        # Desenhando o fundo
-        dis.fill(light_green)
-        # Desenhando alguns pixels de verde escuro no fundo
-        for _ in range(50):  # Adicionando 50 pixels aleatórios
-            pixel_x = random.randrange(0, display_width)
-            pixel_y = random.randrange(0, display_height)
-            dis.set_at((pixel_x, pixel_y), dark_green)
+        # Desenhar o fundo
+        dis.blit(background_img, (0, 0))
 
         # Desenhar a comida na tela
         draw_food(foodx, foody)
